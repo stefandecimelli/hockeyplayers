@@ -3,7 +3,6 @@ package com.decimelli.hockeyplayers.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +21,6 @@ public class HockeyPlayerController {
 	private final HockeyPlayerRepo database;
 	private final HockeyTeamRepo teamDatabase;
 
-	@Autowired
 	public HockeyPlayerController(HockeyPlayerRepo database, HockeyTeamRepo teamDatabase) {
 		this.database = database;
 		this.teamDatabase = teamDatabase;

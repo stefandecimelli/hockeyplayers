@@ -63,3 +63,29 @@ curl --request GET \
 curl --request GET \
   --url http://localhost:8080/teams
 ```
+
+### To create and run a production image:
+Start the database:
+Create a network:
+```
+docker network create hockeyplayer-network
+```
+```
+docker run --rm --name hockeyplayer-database --network hockeyplayer-network --hostname hockeyplayer-database -e POSTGRES_PASSWORD=password -e POSTGRES_DB=hockey -d postgres DATABASE mydatabase;
+```
+Create the docker image
+```
+mvn -Dmaven.test.skip=true spring-boot:build-image -P production
+```
+And run it
+```
+docker run --rm -p 8080:8080 --network hockeyplayer-network \
+  -e SPRING_PROFILES_ACTIVE=production \
+  -e DATABASE_HOST=hockeyplayer-database \
+  -e DATABASE_PORT=5432 \
+  -e DATABASE_NAME=hockey \
+  -e DATABASE_USERNAME=postgres \
+  -e DATABASE_PASSWORD=password \
+docker.io/library/hockeyplayers:0.0.1-SNAPSHOT 
+```
+All of the localhost:8080 curl commands above should work.
